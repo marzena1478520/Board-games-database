@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  shop-db:
+    container_name: shop-db
+    hostname: shop-db
+    environment:
+      TZ: "Etc/UTC"
+      PGTZ: "Etc/UTC"
+    restart: unless-stopped
+    build: .
+    ports:
+      - 5432:5432
+    expose:
+      - 5432
+    command: postgres -c config_file=/postgresql/postgresql.conf
+    volumes:
+      - ./db/configs:/postgresql
+      - ./db/setup_clear:/docker-entrypoint-initdb.d
+      - ./db/data:/var/lib/postgresql/data
+    env_file:
+      - ./db/docker.env
+    networks:
+      - shop
+
+networks:
+  shop:
+    name: shop
+    driver: bridge
