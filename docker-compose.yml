@@ -15,7 +15,7 @@ services:
     command: postgres -c config_file=/postgresql/postgresql.conf
     volumes:
       - ./db/configs:/postgresql
-      - ./db/setup_clear:/docker-entrypoint-initdb.d
+      - ./db/setup_backup:/docker-entrypoint-initdb.d
       - ./db/data:/var/lib/postgresql/data
     env_file:
       - ./db/docker.env
